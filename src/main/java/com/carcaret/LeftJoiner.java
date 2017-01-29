@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class InnerJoiner<U, V, K> implements Joiner<K> {
+public class LeftJoiner<U, V, K> implements Joiner<K> {
 
     private final Iterable<U> e1;
     private final Iterable<V> e2;
 
-    public InnerJoiner(Iterable<U> e1, Iterable<V> e2) {
+    public LeftJoiner(Iterable<U> e1, Iterable<V> e2) {
         this.e1 = e1;
         this.e2 = e2;
     }
@@ -30,11 +30,7 @@ public class InnerJoiner<U, V, K> implements Joiner<K> {
                 .map(e -> {
                     Object key = ReflectionUtil.getId(e);
                     V other = map.get(key);
-                    if(other != null) {
-                        return merger.merge(e, other);
-                    } else {
-                        return null;
-                    }
+                    return merger.merge(e, other);
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
