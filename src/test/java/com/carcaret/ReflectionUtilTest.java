@@ -6,8 +6,6 @@ import org.junit.Test;
 
 public class ReflectionUtilTest {
 
-
-
     @Test
     public void getAnnotatedField() {
         Entity1 entity1 = new Entity1(1L, "1");
