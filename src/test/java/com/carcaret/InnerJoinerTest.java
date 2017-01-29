@@ -1,14 +1,12 @@
 package com.carcaret;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
-public class JoinerTest {
+public class InnerJoinerTest {
 
     @Test
     public void joinTestEqualLength() {
@@ -23,8 +21,8 @@ public class JoinerTest {
             add(new Entity2(2L, "2"));
             add(new Entity2(3L, "3"));
         }};
-        Joiner<Entity1, Entity2, Entity3> joiner = new Joiner<>(e1, e2);
-        List<Entity3> e3 = joiner.join(merger);
+        Joiner<Entity3> joiner = new InnerJoiner<>(e1, e2);
+        List<Entity3> e3 = joiner.joinInto(Entity3.class);
         Assert.assertEquals(3, e3.size());
     }
 
@@ -40,8 +38,8 @@ public class JoinerTest {
             add(new Entity2(1L, "1"));
             add(new Entity2(2L, "2"));
         }};
-        Joiner<Entity1, Entity2, Entity3> joiner = new Joiner<>(e1, e2);
-        List<Entity3> e3 = joiner.join(merger);
+        Joiner<Entity3> joiner = new InnerJoiner<>(e1, e2);
+        List<Entity3> e3 = joiner.joinInto(Entity3.class);
         Assert.assertEquals(2, e3.size());
     }
 
@@ -57,10 +55,8 @@ public class JoinerTest {
             add(new Entity2(2L, "2"));
             add(new Entity2(3L, "3"));
         }};
-        Joiner<Entity1, Entity2, Entity3> joiner = new Joiner<>(e1, e2);
-        List<Entity3> e3 = joiner.join(merger);
+        Joiner<Entity3> joiner = new InnerJoiner<>(e1, e2);
+        List<Entity3> e3 = joiner.joinInto(Entity3.class);
         Assert.assertEquals(2, e3.size());
     }
-
-    private BiFunction<Entity1, Entity2, Entity3> merger = (e1, e2) -> new Entity3(e1.getId(), e1.getField(), e2.getField());
 }
